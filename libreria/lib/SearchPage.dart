@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:libreria/UserCredentials.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:libreria/BookItem.dart';
-
-class SearchPage extends StatefulWidget {
+class SearchPage extends ConsumerStatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends ConsumerState<SearchPage> {
   final _searchController = TextEditingController();
   List _books = [];
   bool _isLoading = false;
@@ -39,20 +39,26 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void _removeBook(int index) {
-    setState(() {
-      _books.removeAt(index);
-    });
-
+  void _addBookToFavorites(String title, String author, String coverUrl) {
+    final provider = ref.read(userProvider.notifier);
+    provider.addFavoriteBook(title, author, coverUrl);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Libro rimosso')),
+      SnackBar(content: Text('Libro aggiunto ai preferiti')),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ricerca Libri')),
+      appBar: AppBar(
+        title: Text('Cerca Libri'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -62,37 +68,40 @@ class _SearchPageState extends State<SearchPage> {
               decoration: InputDecoration(
                 labelText: 'Cerca un libro',
                 border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: _searchBooks,
-                ),
               ),
               onSubmitted: (_) => _searchBooks(),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 16),
             _isLoading
                 ? CircularProgressIndicator()
-                : _books.isEmpty
-                    ? Text('Nessun risultato trovato')
-                    : Expanded(
-                        child: ListView.builder(
-                          itemCount: _books.length,
-                          itemBuilder: (context, index) {
-                            final book = _books[index];
-                            final coverUrl = book['cover_i'] != null
-                                ? 'https://covers.openlibrary.org/b/id/${book['cover_i']}-S.jpg'
-                                : '';
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: _books.length,
+                      itemBuilder: (context, index) {
+                        final book = _books[index];
+                        final title = book['title'] ?? 'Titolo non disponibile';
+                        final author = book['author_name']?.join(', ') ??
+                            'Autore non disponibile';
+                        final coverUrl = book['cover_i'] != null
+                            ? 'https://covers.openlibrary.org/b/id/${book['cover_i']}-M.jpg'
+                            : '';
 
-                            return BookItem(
-                              title: book['title'] ?? 'Senza Titolo',
-                              author: book['author_name']?.join(', ') ??
-                                  'Autore sconosciuto',
-                              coverUrl: coverUrl,
-                              onDismissed: () => _removeBook(index),
-                            );
-                          },
-                        ),
-                      ),
+                        return ListTile(
+                          leading: coverUrl.isNotEmpty
+                              ? Image.network(coverUrl,
+                                  width: 50, fit: BoxFit.cover)
+                              : Icon(Icons.book),
+                          title: Text(title),
+                          subtitle: Text(author),
+                          trailing: IconButton(
+                            icon: Icon(Icons.favorite_border),
+                            onPressed: () =>
+                                _addBookToFavorites(title, author, coverUrl),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
           ],
         ),
       ),

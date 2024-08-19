@@ -1,33 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/UserCredentials.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final usernameController = TextEditingController();
+    final passwordController = TextEditingController();
 
-class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  void _login() {
-    final credentials = UserCredentials(
-      username: _usernameController.text,
-      password: _passwordController.text,
-    );
-
-    if (credentials.validate()) {
-      // Naviga alla pagina con le opzioni dopo il login
-      Navigator.pushReplacementNamed(context, '/options');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Nome utente o password non validi')),
+    void login() {
+      final provider = ref.read(userProvider.notifier);
+      provider.login(
+        usernameController.text,
+        passwordController.text,
       );
-    }
-  }
 
-  @override
-  Widget build(BuildContext context) {
+      if (provider.state?.validate() == true) {
+        Navigator.pushReplacementNamed(context, '/options');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Nome utente o password non validi')),
+        );
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: Padding(
@@ -39,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
               Icon(Icons.lock, size: 100, color: Colors.white),
               SizedBox(height: 20),
               TextField(
-                controller: _usernameController,
+                controller: usernameController,
                 decoration: InputDecoration(
                   labelText: 'Nome utente',
                   labelStyle: TextStyle(color: Colors.white),
@@ -54,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 20),
               TextField(
-                controller: _passwordController,
+                controller: passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(color: Colors.white),
@@ -70,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _login,
+                onPressed: login,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.blueAccent,
                   backgroundColor: Colors.white,

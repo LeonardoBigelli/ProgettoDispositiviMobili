@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:libreria/FavoritesPage.dart';
 import 'package:libreria/LoginPage.dart';
 import 'package:libreria/OpzionsPage.dart';
 import 'package:libreria/SearchPage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ProviderScope(child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,9 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: {
-        '/home': (context) => HomePage(),
         '/options': (context) => OptionsPage(),
         '/search': (context) => SearchPage(),
+        '/favorites': (context) => FavoritesPage(),
       },
     );
   }
@@ -34,13 +38,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-/*
-class SearchPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Ricerca')),
-      body: Center(child: Text('Pagina di Ricerca')),
-    );
-  }
-}*/

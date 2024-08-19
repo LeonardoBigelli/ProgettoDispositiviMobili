@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class OptionsPage extends StatelessWidget {
-  void _startSearch(BuildContext context) {
-    Navigator.pushNamed(context, '/search');
-  }
-
-  void _goToHome(BuildContext context) {
-    Navigator.pushReplacementNamed(context, '/home');
-  }
-
+class OptionsPage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text('Scegli un\'opzione')),
+      appBar: AppBar(title: Text('Opzioni')),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
-              onPressed: () => _startSearch(context),
-              child: Text('Inizia una Ricerca'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              child: Text('Cerca un libro'),
             ),
-            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _goToHome(context),
-              child: Text('Vai alla Home'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/favorites');
+              },
+              child: Text('Vedi preferiti'),
             ),
           ],
         ),
