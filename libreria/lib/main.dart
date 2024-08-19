@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:libreria/LoginPage.dart';
 import 'package:libreria/OpzionsPage.dart';
+import 'package:libreria/SearchPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
+/*
 class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -42,4 +43,4 @@ class SearchPage extends StatelessWidget {
       body: Center(child: Text('Pagina di Ricerca')),
     );
   }
-}
+}*/
