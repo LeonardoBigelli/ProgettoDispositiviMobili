@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/UserCredentials.dart';
+import 'bookItem.dart';
 
 class FavoritesPage extends ConsumerWidget {
   @override
@@ -23,13 +24,14 @@ class FavoritesPage extends ConsumerWidget {
               itemCount: favoriteBooks.length,
               itemBuilder: (context, index) {
                 final book = favoriteBooks[index];
-                return ListTile(
-                  leading: book[2]!.isNotEmpty
-                      ? Image.network(book[2]! as String,
-                          width: 50, fit: BoxFit.cover)
-                      : Icon(Icons.book),
-                  title: Text(book[0]! as String),
-                  subtitle: Text(book[1]! as String),
+                return BookItem(
+                  title: book[0],
+                  author: book[1],
+                  coverUrl: book[2],
+                  onRemove: () {
+                    // Rimuovi il libro dalla lista dei preferiti
+                    ref.read(userProvider.notifier).removeFavoriteBook(book[0]);
+                  },
                 );
               },
             ),
