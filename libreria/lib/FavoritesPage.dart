@@ -24,12 +24,12 @@ class FavoritesPage extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final book = favoriteBooks[index];
                 return ListTile(
-                  leading: book['coverUrl']!.isNotEmpty
-                      ? Image.network(book['coverUrl']!,
+                  leading: book[2]!.isNotEmpty
+                      ? Image.network(book[2]! as String,
                           width: 50, fit: BoxFit.cover)
                       : Icon(Icons.book),
-                  title: Text(book['title']!),
-                  subtitle: Text(book['author']!),
+                  title: Text(book[0]! as String),
+                  subtitle: Text(book[1]! as String),
                 );
               },
             ),

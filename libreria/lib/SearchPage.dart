@@ -65,15 +65,15 @@ class _SearchPageState extends ConsumerState<SearchPage> {
           children: [
             TextField(
               controller: _searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Cerca un libro',
                 border: OutlineInputBorder(),
               ),
               onSubmitted: (_) => _searchBooks(),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _isLoading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : Expanded(
                     child: ListView.builder(
                       itemCount: _books.length,

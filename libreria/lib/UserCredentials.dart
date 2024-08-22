@@ -3,28 +3,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class UserCredentials {
   final String username;
   final String password;
-  List<Map<String, String>> favoriteBooks; //provare una mappa di mappe
+  List<List<String>>
+      favoriteBooks; //un elemento singolo e' [titolo, autore, img copertina]
 
   UserCredentials({
     required this.username,
     required this.password,
-    this.favoriteBooks = const [],
-  });
+    List<List<String>>? favoriteBooks,
+  }) : favoriteBooks = favoriteBooks ?? [];
 
   bool validate() {
     return username.isNotEmpty && password.isNotEmpty;
   }
 
   void addFavoriteBook(String title, String author, String coverUrl) {
-    favoriteBooks.add({
-      'title': title,
-      'author': author,
-      'coverUrl': coverUrl,
-    });
+    favoriteBooks.add([title, author, coverUrl]);
   }
 
   void removeFavoriteBook(String title) {
-    favoriteBooks.removeWhere((book) => book['title'] == title);
+    favoriteBooks.removeWhere((book) => book[0] == title);
   }
 }
 
