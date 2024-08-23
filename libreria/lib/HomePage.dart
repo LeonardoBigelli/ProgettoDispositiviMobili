@@ -36,6 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final bestSellersAsyncValue = ref.watch(bestSellerProvider);
+    int _expandedIndex = -1;
 
     return Scaffold(
       appBar: AppBar(
@@ -49,24 +50,67 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: bestSellersAsyncValue.when(
         data: (books) {
-          return ListView.builder(
-            itemCount: books.length,
-            itemBuilder: (context, index) {
-              final book = books[index];
-              return BookItemEx(
-                book: [
-                  book['title'],
-                  book['author'],
-                  book['book_image'] ?? '',
-                  book['description'] ?? '',
-                ],
-                onSave: () {
-                  // Riverpod per lo stato, aggiungere i libri
-                  _addBookToFavorites(
-                      book['title'], book['author'], book['book_image']);
-                },
-              );
-            },
+          return Column(
+            children: [
+              // Lista orizzontale delle copertine dei libri
+              Container(
+                height: MediaQuery.of(context).size.height *
+                    0.5, // Occupa metà dello schermo
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: books.length,
+                  itemBuilder: (context, index) {
+                    final book = books[index];
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          // Toggle espansione della scheda del libro
+                          _expandedIndex = _expandedIndex == index ? -1 : index;
+                        });
+                      },
+                      child: Container(
+                        width:
+                            160, // Imposta una larghezza fissa per ogni elemento
+                        child: Column(
+                          children: [
+                            BookCoverWidget(
+                              imageUrl: book['book_image'] ?? '',
+                            ),
+                            if (_expandedIndex ==
+                                index) // Mostra i dettagli solo se il libro è espanso
+                              ExpandedBookDetails(
+                                book: [
+                                  book['title'],
+                                  book['author'],
+                                  book['book_image'] ?? '',
+                                  book['description'] ?? '',
+                                ],
+                                onSave: () {
+                                  //aggiunta del libro ai preferiti
+                                  _addBookToFavorites(book['title'],
+                                      book['author'], book['book_image']);
+                                },
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              // Lista verticale placeholder per ulteriori implementazioni
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 10, // Numero di elementi placeholder
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Icon(Icons.book),
+                      title: Text('Elemento Placeholder $index'),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
         loading: () => Center(child: CircularProgressIndicator()),
@@ -77,56 +121,75 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 }
 
-// Widget personalizzato per mostrare le informazioni del libro con possibilità di espansione
-class BookItemEx extends StatelessWidget {
-  final List<String> book; // [title, author, coverUrl, description]
-  final VoidCallback? onSave;
+// Widget personalizzato per mostrare solo la copertina del libro
+class BookCoverWidget extends StatelessWidget {
+  final String imageUrl;
 
-  const BookItemEx({Key? key, required this.book, this.onSave})
-      : super(key: key);
+  const BookCoverWidget({Key? key, required this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      leading: book[2].isNotEmpty
+    return Container(
+      width: 120, // Larghezza fissa per le copertine
+      child: imageUrl.isNotEmpty
           ? Image.network(
-              book[2],
-              width: 50,
-              height: 75,
+              imageUrl,
               fit: BoxFit.cover,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                // Questo widget viene visualizzato se c'è un errore durante il caricamento dell'immagine
                 return Container(
-                  width: 50,
-                  height: 75,
                   color: Colors.grey,
                   child: Icon(
-                      Icons.broken_image), // Icona di immagine non caricata
+                      Icons.broken_image), // Icona per immagine non caricata
                 );
               },
             )
           : Container(
-              width: 50,
-              height: 75,
               color: Colors.grey,
               child: Icon(Icons.book),
             ),
-      title: Text(book[0]),
-      subtitle: Text(book[1]),
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(book[3]), // Descrizione del libro
+    );
+  }
+}
+
+// Widget per mostrare i dettagli espansi di un libro
+class ExpandedBookDetails extends StatelessWidget {
+  final List<String> book; // [title, author, coverUrl, description]
+  final VoidCallback? onSave;
+
+  const ExpandedBookDetails({Key? key, required this.book, this.onSave})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              book[0], // Titolo del libro
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Autore: ${book[1]}', // Autore del libro
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 10),
+            Text(
+              book[3], // Descrizione del libro
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: onSave,
+              child: Text('Aggiungi ai preferiti'),
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ElevatedButton(
-            onPressed: onSave,
-            child: Text('Aggiungi ai preferiti'),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
