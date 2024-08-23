@@ -22,6 +22,12 @@ class OptionsPage extends ConsumerWidget {
               },
               child: Text('Vedi preferiti'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+              child: Text('Home page'),
+            ),
           ],
         ),
       ),

@@ -19,7 +19,7 @@ class LoginPage extends ConsumerWidget {
         Navigator.pushReplacementNamed(context, '/options');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Nome utente o password non validi')),
+          const SnackBar(content: Text('Nome utente o password non validi')),
         );
       }
     }

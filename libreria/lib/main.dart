@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:libreria/FavoritesPage.dart';
+import 'package:libreria/HomePage.dart';
 import 'package:libreria/LoginPage.dart';
 import 'package:libreria/OpzionsPage.dart';
 import 'package:libreria/SearchPage.dart';
@@ -24,12 +25,13 @@ class MyApp extends StatelessWidget {
         '/options': (context) => OptionsPage(),
         '/search': (context) => SearchPage(),
         '/favorites': (context) => FavoritesPage(),
+        '/home': (context) => HomePage(),
       },
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+/*class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,4 +39,4 @@ class HomePage extends StatelessWidget {
       body: Center(child: Text('Benvenuto nella Home Page!')),
     );
   }
-}
+}*/

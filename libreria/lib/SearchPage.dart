@@ -34,7 +34,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore nella ricerca')),
+        const SnackBar(content: Text('Errore nella ricerca')),
       );
     }
   }
