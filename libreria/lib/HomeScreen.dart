@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/FavoritesPage.dart';
 import 'package:libreria/HomePage.dart';
 import 'package:libreria/SearchPage.dart';
+import 'package:libreria/UserPage.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     HomePage(),
     SearchPage(),
     FavoritesPage(),
+    UserPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,10 +44,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             icon: Icon(Icons.favorite),
             label: 'Favorites',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'User',
+          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor:
+            Colors.pinkAccent, // Colore dell'elemento selezionato
+        unselectedItemColor:
+            Colors.white70, // Colore degli elementi non selezionati
+        backgroundColor:
+            Colors.indigo, // Colore di sfondo della BottomNavigationBar
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed, // Tipo di barra di navigazione
       ),
     );
   }
