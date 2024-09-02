@@ -29,7 +29,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final provider = ref.read(userProvider.notifier);
     provider.addFavoriteBook(title, author, coverUrl);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Libro aggiunto ai preferiti')),
+      const SnackBar(content: Text('Libro aggiunto ai preferiti')),
     );
   }
 
@@ -40,9 +40,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bestseller'),
+        title: const Text('Bestseller'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -104,7 +104,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   itemCount: 10, // Numero di elementi placeholder
                   itemBuilder: (context, index) {
                     return ListTile(
-                      leading: Icon(Icons.book),
+                      leading: const Icon(Icons.book),
                       title: Text('Elemento Placeholder $index'),
                     );
                   },
@@ -113,7 +113,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ],
           );
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) =>
             Center(child: Text('Failed to load data: $error')),
       ),
@@ -139,14 +139,14 @@ class BookCoverWidget extends StatelessWidget {
                   StackTrace? stackTrace) {
                 return Container(
                   color: Colors.grey,
-                  child: Icon(
+                  child: const Icon(
                       Icons.broken_image), // Icona per immagine non caricata
                 );
               },
             )
           : Container(
               color: Colors.grey,
-              child: Icon(Icons.book),
+              child: const Icon(Icons.book),
             ),
     );
   }
@@ -163,7 +163,7 @@ class ExpandedBookDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -171,21 +171,21 @@ class ExpandedBookDetails extends StatelessWidget {
           children: [
             Text(
               book[0], // Titolo del libro
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(
               'Autore: ${book[1]}', // Autore del libro
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               book[3], // Descrizione del libro
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: onSave,
-              child: Text('Aggiungi ai preferiti'),
+              child: const Text('Aggiungi ai preferiti'),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:libreria/HomeScreen.dart';
 import 'package:libreria/UserCredentials.dart';
 
 class LoginPage extends ConsumerWidget {
@@ -15,8 +16,12 @@ class LoginPage extends ConsumerWidget {
         passwordController.text,
       );
 
+      //controllo le credenziali inserite, invocando il metodo validate() di userCredential
       if (provider.state?.validate() == true) {
-        Navigator.pushReplacementNamed(context, '/options');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Nome utente o password non validi')),
@@ -32,13 +37,13 @@ class LoginPage extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.lock, size: 100, color: Colors.white),
-              SizedBox(height: 20),
+              const Icon(Icons.lock, size: 100, color: Colors.white),
+              const SizedBox(height: 20),
               TextField(
                 controller: usernameController,
                 decoration: InputDecoration(
                   labelText: 'Nome utente',
-                  labelStyle: TextStyle(color: Colors.white),
+                  labelStyle: const TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: Colors.white24,
                   border: OutlineInputBorder(
@@ -46,14 +51,14 @@ class LoginPage extends ConsumerWidget {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white),
+                  labelStyle: const TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: Colors.white24,
                   border: OutlineInputBorder(
@@ -62,20 +67,21 @@ class LoginPage extends ConsumerWidget {
                   ),
                 ),
                 obscureText: true,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: login,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.blueAccent,
                   backgroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text('Login'),
+                child: const Text('Login'),
               ),
             ],
           ),

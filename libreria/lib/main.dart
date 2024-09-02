@@ -6,6 +6,9 @@ import 'package:libreria/OpzionsPage.dart';
 import 'package:libreria/SearchPage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//cambiare icona
+//tinderCard
+//honeyBeeDb
 void main() {
   runApp(
     ProviderScope(child: MyApp()),
@@ -13,14 +16,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Login Demo',
+      //rimozione del banner di debug
+      debugShowCheckedModeBanner: false,
+      //title: 'Flutter Login Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      //pagina principale che viene invocata appena viene aperta l'applicazione
       home: LoginPage(),
+      //possibili rotte con correlate pagine
       routes: {
         '/options': (context) => OptionsPage(),
         '/search': (context) => SearchPage(),

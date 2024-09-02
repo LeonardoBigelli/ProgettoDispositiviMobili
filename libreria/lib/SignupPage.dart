@@ -5,7 +5,7 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Crea un Nuovo Account')),
-      body: Center(child: Text('Pagina di Registrazione')),
+      body: const Center(child: Text('Pagina di Registrazione')),
     );
   }
 }

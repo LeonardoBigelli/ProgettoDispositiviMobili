@@ -4,6 +4,7 @@ import 'package:libreria/UserCredentials.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+//NON SONO SICURO CHE SERVA LO STATO (DA RIVEDERE), per ora serve (lo stato) per capire se ho caricato i libri o meno
 class SearchPage extends ConsumerStatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -40,10 +41,11 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   }
 
   void _addBookToFavorites(String title, String author, String coverUrl) {
+    //richiedo l'utente loggato durante la sessione corrente
     final provider = ref.read(userProvider.notifier);
     provider.addFavoriteBook(title, author, coverUrl);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Libro aggiunto ai preferiti')),
+      const SnackBar(content: Text('Libro aggiunto ai preferiti')),
     );
   }
 
@@ -51,9 +53,10 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cerca Libri'),
+        title: const Text('Cerca Libri'),
+        //sezione che precede il titolo, per tornare alla pagina precedente
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -75,6 +78,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             _isLoading
                 ? const CircularProgressIndicator()
                 : Expanded(
+                    //ListView per mostrare tutti i libri caricati
                     child: ListView.builder(
                       itemCount: _books.length,
                       itemBuilder: (context, index) {
@@ -90,11 +94,11 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                           leading: coverUrl.isNotEmpty
                               ? Image.network(coverUrl,
                                   width: 50, fit: BoxFit.cover)
-                              : Icon(Icons.book),
+                              : const Icon(Icons.book),
                           title: Text(title),
                           subtitle: Text(author),
                           trailing: IconButton(
-                            icon: Icon(Icons.favorite_border),
+                            icon: const Icon(Icons.favorite_border),
                             onPressed: () =>
                                 _addBookToFavorites(title, author, coverUrl),
                           ),

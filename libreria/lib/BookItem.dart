@@ -27,13 +27,13 @@ class BookItem extends StatelessWidget {
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Icon(Icons.delete, color: Colors.white),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: const Icon(Icons.delete, color: Colors.white),
       ),
       child: ListTile(
         leading: coverUrl.isNotEmpty
             ? Image.network(coverUrl, width: 50, fit: BoxFit.cover)
-            : Icon(Icons.book),
+            : const Icon(Icons.book),
         title: Text(title),
         subtitle: Text(author),
       ),

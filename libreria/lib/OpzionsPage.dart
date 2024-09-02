@@ -5,7 +5,7 @@ class OptionsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text('Opzioni')),
+      appBar: AppBar(title: const Text('Opzioni')),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -14,19 +14,19 @@ class OptionsPage extends ConsumerWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/search');
               },
-              child: Text('Cerca un libro'),
+              child: const Text('Cerca un libro'),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/favorites');
               },
-              child: Text('Vedi preferiti'),
+              child: const Text('Vedi preferiti'),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/home');
               },
-              child: Text('Home page'),
+              child: const Text('Home page'),
             ),
           ],
         ),
