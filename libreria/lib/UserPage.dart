@@ -16,7 +16,7 @@ class UserPage extends ConsumerWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.blueAccent, Colors.lightBlueAccent],
             begin: Alignment.topCenter,
@@ -26,9 +26,9 @@ class UserPage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Foto Profilo
-            CircleAvatar(
+            const CircleAvatar(
               radius: 50,
               backgroundColor: Colors.white,
               child: Icon(
@@ -37,10 +37,10 @@ class UserPage extends ConsumerWidget {
                 color: Colors.blueAccent,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Informazioni Utente
             Card(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -50,7 +50,7 @@ class UserPage extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Nome utente:',
                       style: TextStyle(
                         fontSize: 18,
@@ -58,13 +58,13 @@ class UserPage extends ConsumerWidget {
                         color: Colors.blueAccent,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       user!.username,
                       style: TextStyle(fontSize: 24, color: Colors.black87),
                     ),
-                    Divider(),
-                    Text(
+                    const Divider(),
+                    const Text(
                       'Password:',
                       style: TextStyle(
                         fontSize: 18,
@@ -72,24 +72,25 @@ class UserPage extends ConsumerWidget {
                         color: Colors.blueAccent,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       user.password,
-                      style: TextStyle(fontSize: 24, color: Colors.black87),
+                      style:
+                          const TextStyle(fontSize: 24, color: Colors.black87),
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Contatore dei Preferiti
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black26,
                     blurRadius: 10,
@@ -100,7 +101,7 @@ class UserPage extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Libri salvati nei preferiti:',
                     style: TextStyle(
                       fontSize: 18,
@@ -109,14 +110,15 @@ class UserPage extends ConsumerWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       color: Colors.blueAccent,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       favoriteBooks.length.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
