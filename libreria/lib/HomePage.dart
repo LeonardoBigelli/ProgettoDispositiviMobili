@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:libreria/UserCredentials.dart';
+import 'package:libreria/BookDetailsPage.dart';
 
 // Definisce il provider per i dati dei libri bestseller
 final bestSellerProvider = FutureProvider<List<dynamic>>((ref) async {
@@ -17,105 +17,148 @@ final bestSellerProvider = FutureProvider<List<dynamic>>((ref) async {
   }
 });
 
+// Definisce il provider per i libri più venduti
+final mostSoldBooksProvider = FutureProvider<List<dynamic>>((ref) async {
+  final response = await http.get(Uri.parse(
+      'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=AguAOknUFxVqy4VNKquO7Z2q45pnMlko'));
+
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    return data['results']['books'];
+  } else {
+    throw Exception('Failed to load most sold books');
+  }
+});
+
 class HomePage extends ConsumerStatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-// HomePage che mostra i bestseller
+// HomePage che mostra i bestseller e i libri più venduti
 class _HomePageState extends ConsumerState<HomePage> {
-  //funzione per aggiungere il libro tra i preferiti
-  void _addBookToFavorites(String title, String author, String coverUrl) {
-    final provider = ref.read(userProvider.notifier);
-    provider.addFavoriteBook(title, author, coverUrl);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Libro aggiunto ai preferiti')),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final bestSellersAsyncValue = ref.watch(bestSellerProvider);
-    int _expandedIndex = -1;
+    final mostSoldBooksAsyncValue = ref.watch(mostSoldBooksProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bestseller'),
-        /* leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),*/
+        title: const Text('Home Page'),
       ),
-      body: bestSellersAsyncValue.when(
-        data: (books) {
-          return Column(
-            children: [
-              // Lista orizzontale delle copertine dei libri
-              Container(
-                height: MediaQuery.of(context).size.height *
-                    0.5, // Occupa metà dello schermo
-                child: ListView.builder(
+      body: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.start, // allinea gli elementi a sinistra
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Bestseller', // Titolo per la sezione dei bestseller
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          // Lista orizzontale delle copertine dei libri
+          SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.3, // Occupa una parte dello schermo
+            child: bestSellersAsyncValue.when(
+              data: (books) {
+                return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: books.length,
                   itemBuilder: (context, index) {
                     final book = books[index];
                     return GestureDetector(
                       onTap: () {
-                        setState(() {
-                          // Toggle espansione della scheda del libro
-                          _expandedIndex = _expandedIndex == index ? -1 : index;
-                        });
+                        // Naviga alla pagina dei dettagli del libro
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookDetailsPage(
+                              title: book['title'],
+                              author: book['author'],
+                              coverUrl: book['book_image'] ?? '',
+                              description: book['description'] ?? '',
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
-                        width:
-                            160, // Imposta una larghezza fissa per ogni elemento
-                        child: Column(
-                          children: [
-                            BookCoverWidget(
-                              imageUrl: book['book_image'] ?? '',
-                            ),
-                            if (_expandedIndex ==
-                                index) // Mostra i dettagli solo se il libro è espanso
-                              ExpandedBookDetails(
-                                book: [
-                                  book['title'],
-                                  book['author'],
-                                  book['book_image'] ?? '',
-                                  book['description'] ?? '',
-                                ],
-                                onSave: () {
-                                  //aggiunta del libro ai preferiti
-                                  _addBookToFavorites(book['title'],
-                                      book['author'], book['book_image']);
-                                },
-                              ),
-                          ],
+                        width: 160,
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: AspectRatio(
+                          aspectRatio: 2 /
+                              3, // Imposta un rapporto fisso per le copertine dei libri
+                          child: BookCoverWidget(
+                            imageUrl: book['book_image'] ?? '',
+                          ),
                         ),
                       ),
                     );
                   },
-                ),
-              ),
-              // Lista verticale placeholder per ulteriori implementazioni
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 10, // Numero di elementi placeholder
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) =>
+                  Center(child: Text('Failed to load data: $error')),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Text(
+              'I Più Venduti', // Titolo per la sezione dei più venduti
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          // Lista verticale per i libri più venduti
+          Expanded(
+            child: mostSoldBooksAsyncValue.when(
+              data: (books) {
+                return ListView.builder(
+                  itemCount: books.length,
                   itemBuilder: (context, index) {
+                    final book = books[index];
                     return ListTile(
-                      leading: const Icon(Icons.book),
-                      title: Text('Elemento Placeholder $index'),
+                      leading: SizedBox(
+                        width: 50,
+                        height: 75,
+                        child: Image.network(
+                          book['book_image'] ?? '',
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return Container(
+                              color: Colors.grey,
+                              child: const Icon(Icons.broken_image),
+                            );
+                          },
+                        ),
+                      ),
+                      title: Text(book['title']),
+                      onTap: () {
+                        // Naviga alla pagina dei dettagli del libro
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookDetailsPage(
+                              title: book['title'],
+                              author: book['author'],
+                              coverUrl: book['book_image'] ?? '',
+                              description: book['description'] ?? '',
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
-                ),
-              ),
-            ],
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) =>
-            Center(child: Text('Failed to load data: $error')),
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) =>
+                  Center(child: Text('Failed to load data: $error')),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -129,18 +172,19 @@ class BookCoverWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120, // Larghezza fissa per le copertine
+    return ClipRRect(
+      // Clip con bordi arrotondati per migliorare l'aspetto
+      borderRadius: BorderRadius.circular(8.0),
       child: imageUrl.isNotEmpty
           ? Image.network(
               imageUrl,
-              fit: BoxFit.cover,
+              fit: BoxFit
+                  .cover, // Assicurati che l'immagine riempia tutto lo spazio disponibile
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return Container(
                   color: Colors.grey,
-                  child: const Icon(
-                      Icons.broken_image), // Icona per immagine non caricata
+                  child: const Icon(Icons.broken_image),
                 );
               },
             )
@@ -148,48 +192,6 @@ class BookCoverWidget extends StatelessWidget {
               color: Colors.grey,
               child: const Icon(Icons.book),
             ),
-    );
-  }
-}
-
-// Widget per mostrare i dettagli espansi di un libro
-class ExpandedBookDetails extends StatelessWidget {
-  final List<String> book; // [title, author, coverUrl, description]
-  final VoidCallback? onSave;
-
-  const ExpandedBookDetails({Key? key, required this.book, this.onSave})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              book[0], // Titolo del libro
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Autore: ${book[1]}', // Autore del libro
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              book[3], // Descrizione del libro
-              style: const TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: onSave,
-              child: const Text('Aggiungi ai preferiti'),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
