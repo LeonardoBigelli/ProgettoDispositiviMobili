@@ -11,12 +11,12 @@ class FavoritesPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Libri Preferiti'),
-        leading: IconButton(
+        /* leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
-        ),
+        ),*/
       ),
       body: favoriteBooks.isEmpty
           ? const Center(child: Text('Nessun libro preferito'))

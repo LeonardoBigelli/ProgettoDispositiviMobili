@@ -55,12 +55,12 @@ class _SearchPageState extends ConsumerState<SearchPage> {
       appBar: AppBar(
         title: const Text('Cerca Libri'),
         //sezione che precede il titolo, per tornare alla pagina precedente
-        leading: IconButton(
+        /* leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
-        ),
+        ),*/
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

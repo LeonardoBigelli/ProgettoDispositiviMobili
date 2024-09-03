@@ -41,12 +41,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bestseller'),
-        leading: IconButton(
+        /* leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
-        ),
+        ),*/
       ),
       body: bestSellersAsyncValue.when(
         data: (books) {

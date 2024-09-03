@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:libreria/FavoritesPage.dart';
-import 'package:libreria/HomePage.dart';
 import 'package:libreria/LoginPage.dart';
-import 'package:libreria/OpzionsPage.dart';
-import 'package:libreria/SearchPage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //cambiare icona
@@ -11,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //honeyBeeDb
 void main() {
   runApp(
-    ProviderScope(child: MyApp()),
+    const ProviderScope(child: MyApp()),
   );
 }
 
@@ -30,12 +26,12 @@ class MyApp extends StatelessWidget {
       //pagina principale che viene invocata appena viene aperta l'applicazione
       home: LoginPage(),
       //possibili rotte con correlate pagine
-      routes: {
+      /* routes: {
         '/options': (context) => OptionsPage(),
         '/search': (context) => SearchPage(),
         '/favorites': (context) => FavoritesPage(),
         '/home': (context) => HomePage(),
-      },
+      },*/
     );
   }
 }
