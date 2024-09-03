@@ -54,6 +54,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cerca Libri'),
+        backgroundColor: Colors.indigo,
         //sezione che precede il titolo, per tornare alla pagina precedente
         /* leading: IconButton(
           icon: const Icon(Icons.arrow_back),

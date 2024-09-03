@@ -11,6 +11,7 @@ class FavoritesPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Libri Preferiti'),
+        backgroundColor: Colors.indigo,
         /* leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

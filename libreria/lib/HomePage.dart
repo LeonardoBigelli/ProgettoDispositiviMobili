@@ -45,6 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        backgroundColor: Colors.indigo,
       ),
       body: Column(
         crossAxisAlignment:
