@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:libreria/BookDetailsPage.dart';
 import 'package:libreria/UserCredentials.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,15 +39,6 @@ class _SearchPageState extends ConsumerState<SearchPage> {
         const SnackBar(content: Text('Errore nella ricerca')),
       );
     }
-  }
-
-  void _addBookToFavorites(String title, String author, String coverUrl) {
-    //richiedo l'utente loggato durante la sessione corrente
-    final provider = ref.read(userProvider.notifier);
-    provider.addFavoriteBook(title, author, coverUrl);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Libro aggiunto ai preferiti')),
-    );
   }
 
   @override
@@ -98,11 +90,21 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                               : const Icon(Icons.book),
                           title: Text(title),
                           subtitle: Text(author),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.favorite_border),
-                            onPressed: () =>
-                                _addBookToFavorites(title, author, coverUrl),
-                          ),
+                          onTap: () {
+                            // Naviga alla pagina dei dettagli del libro
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookDetailsPage(
+                                  title: title,
+                                  author: author,
+                                  coverUrl:
+                                      'https://covers.openlibrary.org/b/id/${book['cover_i']}-M.jpg',
+                                  description: book['description'] ?? '',
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

@@ -20,7 +20,9 @@ class FavoritesPage extends ConsumerWidget {
         ),*/
       ),
       body: favoriteBooks.isEmpty
-          ? const Center(child: Text('Nessun libro preferito'))
+          ? const Expanded(
+              child:
+                  Center(child: Text('Nessun libro preferito'))) //add expanded
           : ListView.builder(
               itemCount: favoriteBooks.length,
               itemBuilder: (context, index) {
