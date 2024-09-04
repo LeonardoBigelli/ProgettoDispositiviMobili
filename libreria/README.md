@@ -1,7 +1,7 @@
 # libreria
 
 Progetto sviluppato in Flutter che permette la gestione di una libreria personale.
-![logo](/assets/images/logo.png)
+![logo](logo.png)
 
 ## Specifica
 
