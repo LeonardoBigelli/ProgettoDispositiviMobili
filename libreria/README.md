@@ -1,16 +1,13 @@
 # libreria
 
-A new Flutter project.
+Progetto sviluppato in Flutter che permette la gestione di una libreria personale.
 
-## Getting Started
+## Specifica
 
-This project is a starting point for a Flutter application.
+L'applicazione permette di conoscere i libri bestsellers dell'ultimo periodo e anche quelli con più recensioni. In aggiunta è possibile cercare dei libri tramite il proprio titolo. L'applicazione funge da archivio, quindi è possibile salvare ogni libro trovato nei sezione preferiti. Il sistema salvarà in locale i libri precedentemente segnati come "preferiti".
 
-A few resources to get you started if this is your first Flutter project:
+## Tecnologie impiegate
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Funzionamento 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Test effettuati
