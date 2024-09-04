@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/BookDetailsPage.dart';
-import 'package:libreria/UserCredentials.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
