@@ -44,7 +44,10 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text(
+          'Home Page',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.indigo,
       ),
       body: Column(

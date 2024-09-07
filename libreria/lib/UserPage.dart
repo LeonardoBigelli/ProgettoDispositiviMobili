@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/UserCredentials.dart';
 
-class UserPage extends ConsumerWidget {
+class UserPage extends ConsumerStatefulWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _UserPageState createState() => _UserPageState();
+}
+
+class _UserPageState extends ConsumerState<UserPage> {
+  bool _isPasswordVisible =
+      false; // Variabile per gestire la visibilità della password
+
+  @override
+  Widget build(BuildContext context) {
     final user = ref.watch(userProvider); // Legge lo stato dell'utente corrente
     final favoriteBooks = ref.watch(userProvider)?.favoriteBooks ?? [];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profilo Utente'),
+        title:
+            const Text('Profilo Utente', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blueAccent,
       ),
       body: Container(
@@ -61,7 +70,8 @@ class UserPage extends ConsumerWidget {
                     const SizedBox(height: 8),
                     Text(
                       user!.username,
-                      style: TextStyle(fontSize: 24, color: Colors.black87),
+                      style:
+                          const TextStyle(fontSize: 24, color: Colors.black87),
                     ),
                     const Divider(),
                     const Text(
@@ -73,10 +83,34 @@ class UserPage extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      user.password,
-                      style:
-                          const TextStyle(fontSize: 24, color: Colors.black87),
+                    Row(
+                      children: [
+                        // Campo password oscurato o visibile in base a _isPasswordVisible
+                        Expanded(
+                          child: Text(
+                            _isPasswordVisible
+                                ? user.password
+                                : '•' * user.password.length,
+                            style: const TextStyle(
+                                fontSize: 24, color: Colors.black87),
+                          ),
+                        ),
+                        // Icona per mostrare/nascondere la password
+                        IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.blueAccent,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible =
+                                  !_isPasswordVisible; // Alterna la visibilità
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

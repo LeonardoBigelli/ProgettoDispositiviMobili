@@ -10,7 +10,8 @@ class FavoritesPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Libri Preferiti'),
+        title: const Text('Libri Preferiti',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.indigo,
         /* leading: IconButton(
           icon: const Icon(Icons.arrow_back),

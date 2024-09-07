@@ -44,7 +44,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cerca Libri'),
+        title: const Text('Cerca Libri', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.indigo,
         //sezione che precede il titolo, per tornare alla pagina precedente
         /* leading: IconButton(
