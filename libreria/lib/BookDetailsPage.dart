@@ -37,54 +37,52 @@ class BookDetailsPage extends ConsumerWidget {
           },
         ),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: coverUrl.isNotEmpty
-                  ? Image.network(
-                      coverUrl,
-                      height: 200,
-                      fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        return Container(
-                          color: Colors.grey,
-                          height: 200,
-                          child: const Icon(Icons.broken_image),
-                        );
-                      },
-                    )
-                  : Container(
-                      color: Colors.grey,
-                      height: 200,
-                      child: const Icon(Icons.book),
-                    ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Autore: $author',
-              style: const TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              description,
-              style: const TextStyle(fontSize: 16),
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () => _addBookToFavorites(context, ref),
-              child: const Text('Aggiungi ai preferiti'),
-            ),
-          ],
-        ),
+        children: [
+          Center(
+            child: coverUrl.isNotEmpty
+                ? Image.network(
+                    coverUrl,
+                    height: 200,
+                    fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Container(
+                        color: Colors.grey,
+                        height: 200,
+                        child: const Icon(Icons.broken_image),
+                      );
+                    },
+                  )
+                : Container(
+                    color: Colors.grey,
+                    height: 200,
+                    child: const Icon(Icons.book),
+                  ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Autore: $author',
+            style: const TextStyle(fontSize: 18),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            description,
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(
+              height: 16), // Aggiungi spazio tra il testo e il pulsante
+          ElevatedButton(
+            onPressed: () => _addBookToFavorites(context, ref),
+            child: const Text('Aggiungi ai preferiti'),
+          ),
+        ],
       ),
     );
   }
