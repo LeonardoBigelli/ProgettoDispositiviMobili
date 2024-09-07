@@ -32,8 +32,8 @@ class _UserPageState extends ConsumerState<UserPage> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
+          padding: const EdgeInsets.all(16.0), // Aggiunge padding
           children: [
             const SizedBox(height: 20),
             // Foto Profilo
