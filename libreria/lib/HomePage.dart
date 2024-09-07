@@ -50,21 +50,20 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
         backgroundColor: Colors.indigo,
       ),
-      body: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start, // allinea gli elementi a sinistra
+      body: ListView(
         children: [
+          // Titolo per la sezione dei bestseller
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Bestseller', // Titolo per la sezione dei bestseller
+              'Bestseller',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           // Lista orizzontale delle copertine dei libri
           SizedBox(
             height: MediaQuery.of(context).size.height *
-                0.3, // Occupa una parte dello schermo
+                0.3, // Altezza fissa per la lista orizzontale
             child: bestSellersAsyncValue.when(
               data: (books) {
                 return ListView.builder(
@@ -110,12 +109,15 @@ class _HomePageState extends ConsumerState<HomePage> {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Text(
-              'I Più Venduti', // Titolo per la sezione dei più venduti
+              'I Più Venduti',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           // Lista verticale per i libri più venduti
-          Expanded(
+          SizedBox(
+            height: MediaQuery.of(context).size.height -
+                (MediaQuery.of(context).size.height * 0.3) -
+                128, // Altezza dinamica
             child: mostSoldBooksAsyncValue.when(
               data: (books) {
                 return ListView.builder(
@@ -177,13 +179,11 @@ class BookCoverWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      // Clip con bordi arrotondati per migliorare l'aspetto
       borderRadius: BorderRadius.circular(8.0),
       child: imageUrl.isNotEmpty
           ? Image.network(
               imageUrl,
-              fit: BoxFit
-                  .cover, // Assicurati che l'immagine riempia tutto lo spazio disponibile
+              fit: BoxFit.cover,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return Container(
