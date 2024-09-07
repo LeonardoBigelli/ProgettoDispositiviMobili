@@ -13,17 +13,38 @@ class FavoritesPage extends ConsumerWidget {
         title: const Text('Libri Preferiti',
             style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.indigo,
-        /* leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),*/
       ),
       body: favoriteBooks.isEmpty
-          ? const Expanded(
-              child:
-                  Center(child: Text('Nessun libro preferito'))) //add expanded
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.favorite_border, size: 80, color: Colors.grey),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Nessun libro preferito',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[600],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Aggiungi libri alla tua lista di preferiti per visualizzarli qui.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[500],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            )
           : ListView.builder(
               itemCount: favoriteBooks.length,
               itemBuilder: (context, index) {
