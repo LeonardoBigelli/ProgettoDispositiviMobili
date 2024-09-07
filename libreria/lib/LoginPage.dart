@@ -16,7 +16,7 @@ class LoginPage extends ConsumerWidget {
         passwordController.text,
       );
 
-      //controllo le credenziali inserite, invocando il metodo validate() di userCredential
+      // Controlla le credenziali inserite
       if (provider.state?.validate() == true) {
         Navigator.pushReplacement(
           context,
@@ -34,8 +34,9 @@ class LoginPage extends ConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: ListView(
+            // Usa una ListView per permettere lo scorrimento su dispositivi con schermo piccolo o in modalità landscape
+            shrinkWrap: true, // Si adatta alla grandezza dei suoi contenuti
             children: [
               const Icon(Icons.lock, size: 100, color: Colors.white),
               const SizedBox(height: 20),
@@ -66,7 +67,7 @@ class LoginPage extends ConsumerWidget {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                obscureText: true,
+                obscureText: true, // Nasconde il testo della password
                 style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 20),
