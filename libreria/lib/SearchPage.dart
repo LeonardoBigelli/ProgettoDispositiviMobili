@@ -68,33 +68,50 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             )
           else ...[
             for (var book in _books)
-              ListTile(
-                leading: book['cover_i'] != null
-                    ? Image.network(
-                        'https://covers.openlibrary.org/b/id/${book['cover_i']}-M.jpg',
-                        width: 50,
-                        fit: BoxFit.cover,
-                      )
-                    : const Icon(Icons.book),
-                title: Text(book['title'] ?? 'Titolo non disponibile'),
-                subtitle: Text(book['author_name']?.join(', ') ??
-                    'Autore non disponibile'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BookDetailsPage(
-                        title: book['title'] ?? 'Titolo non disponibile',
-                        author: book['author_name']?.join(', ') ??
-                            'Autore non disponibile',
-                        coverUrl: book['cover_i'] != null
-                            ? 'https://covers.openlibrary.org/b/id/${book['cover_i']}-M.jpg'
-                            : '',
-                        description: book['description'] ?? '',
+              Card(
+                elevation: 4, // Ombra della Card
+                margin: const EdgeInsets.symmetric(
+                    vertical: 8.0), // Spazio verticale tra le Card
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(12.0), // Padding interno
+                  leading: book['cover_i'] != null
+                      ? Image.network(
+                          'https://covers.openlibrary.org/b/id/${book['cover_i']}-M.jpg',
+                          width: 50,
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return Container(
+                              color: Colors.grey,
+                              width: 50,
+                              child: const Icon(Icons.broken_image),
+                            );
+                          },
+                        )
+                      : const Icon(Icons.book),
+                  title: Text(
+                    book['title'] ?? 'Titolo non disponibile',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(book['author_name']?.join(', ') ??
+                      'Autore non disponibile'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookDetailsPage(
+                          title: book['title'] ?? 'Titolo non disponibile',
+                          author: book['author_name']?.join(', ') ??
+                              'Autore non disponibile',
+                          coverUrl: book['cover_i'] != null
+                              ? 'https://covers.openlibrary.org/b/id/${book['cover_i']}-M.jpg'
+                              : '',
+                          description: book['description'] ?? '',
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
           ],
         ],
