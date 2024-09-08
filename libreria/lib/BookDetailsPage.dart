@@ -29,7 +29,11 @@ class BookDetailsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.indigo,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -37,52 +41,107 @@ class BookDetailsPage extends ConsumerWidget {
           },
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          Center(
-            child: coverUrl.isNotEmpty
-                ? Image.network(
-                    coverUrl,
-                    height: 200,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Container(
-                        color: Colors.grey,
-                        height: 200,
-                        child: const Icon(Icons.broken_image),
-                      );
-                    },
-                  )
-                : Container(
-                    color: Colors.grey,
-                    height: 200,
-                    child: const Icon(Icons.book),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.indigo, Colors.white],
+          ),
+        ),
+        child: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 8,
+                      spreadRadius: 1,
+                      offset: Offset(2, 4),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: coverUrl.isNotEmpty
+                      ? Image.network(
+                          coverUrl,
+                          height: 250,
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return Container(
+                              color: Colors.grey,
+                              height: 250,
+                              child: const Icon(Icons.broken_image, size: 50),
+                            );
+                          },
+                        )
+                      : Container(
+                          color: Colors.grey,
+                          height: 250,
+                          child: const Icon(Icons.book, size: 50),
+                        ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.indigo,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Center(
+              child: Text(
+                'Autore: $author',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              description,
+              textAlign: TextAlign.justify,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: ElevatedButton(
+                onPressed: () => _addBookToFavorites(context, ref),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.indigo,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Autore: $author',
-            style: const TextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            description,
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(
-              height: 16), // Aggiungi spazio tra il testo e il pulsante
-          ElevatedButton(
-            onPressed: () => _addBookToFavorites(context, ref),
-            child: const Text('Aggiungi ai preferiti'),
-          ),
-        ],
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  elevation: 5,
+                ),
+                child: const Text(
+                  'Aggiungi ai preferiti',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
