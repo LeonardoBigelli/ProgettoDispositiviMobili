@@ -19,7 +19,7 @@ L'applicazione gestisce un utente, precedentemente creato, a cui sono chieste le
 
 All'interno dell'applicazione sono stati utilizzati diversi pacchetti, fruti attraverso "pub.dev", per garantire una corretta esecuzione dell'applicativo, rimanendo il linea con la specifica. Segue una lista con breve descrizione dei pacchetti utilizzati.
 
-1. flutter_riverpod: pacchetto utilizzato per gestire e propagare lo stato, ovvero l'utenza dove al suo interno è presente la lista di libri salvati nei preferiti;
-2. path_provider: pacchetto utilizzato per accedere alla path locale dove è installata l'applicazione. Fondamentale in quanto lo stato è salvato localmente nel dispositivo per poter poi essere ricaricato all'apertura dell'applicazione;
-3. flutter_launcher_icons: pacchetto impiegato per cambiare l'icona dell'applicazione;
-4. http: pacchetto per poter effettuare e gestire richieste di tipo HTTP.
+1. **flutter_riverpod:** pacchetto utilizzato per gestire e propagare lo stato, ovvero l'utenza dove al suo interno è presente la lista di libri salvati nei preferiti;
+2. **path_provider:** pacchetto utilizzato per accedere alla path locale dove è installata l'applicazione. Fondamentale in quanto lo stato è salvato localmente nel dispositivo per poter poi essere ricaricato all'apertura dell'applicazione;
+3. **flutter_launcher_icons:** pacchetto impiegato per cambiare l'icona dell'applicazione;
+4. **http:** pacchetto per poter effettuare e gestire richieste di tipo HTTP.
