@@ -19,7 +19,7 @@ class BookItem extends StatelessWidget {
       key: Key(title),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        onRemove(); // Chiama il callback quando l'elemento viene eliminato
+        onRemove();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('$title rimosso dai preferiti')),
         );

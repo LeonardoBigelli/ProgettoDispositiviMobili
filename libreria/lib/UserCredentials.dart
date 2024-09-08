@@ -94,7 +94,6 @@ class UserProvider extends StateNotifier<UserCredentials?> {
 
   void login(String username, String password) {
     state = UserCredentials(username: username, password: password);
-    //  _saveUser(); // Salva l'utente subito dopo il login
   }
 
   void addFavoriteBook(String title, String author, String coverUrl) {

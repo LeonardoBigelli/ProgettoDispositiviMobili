@@ -90,8 +90,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         width: 160,
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: AspectRatio(
-                          aspectRatio: 2 /
-                              3, // Imposta un rapporto fisso per le copertine dei libri
+                          aspectRatio: 2 / 3,
                           child: BookCoverWidget(
                             imageUrl: book['book_image'] ?? '',
                           ),
@@ -109,7 +108,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Text(
-              'I Più Venduti',
+              'Titoli del momento',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),

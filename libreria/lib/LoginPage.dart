@@ -17,6 +17,7 @@ class LoginPage extends ConsumerWidget {
       );
 
       // Controlla le credenziali inserite
+      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
       if (provider.state?.validate() == true) {
         Navigator.pushReplacement(
           context,
@@ -35,8 +36,8 @@ class LoginPage extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: ListView(
-            // Usa una ListView per permettere lo scorrimento su dispositivi con schermo piccolo o in modalità landscape
-            shrinkWrap: true, // Si adatta alla grandezza dei suoi contenuti
+            //ListView per permettere lo scorrimento su dispositivi con schermo piccolo o in orizzontale
+            shrinkWrap: true, //adatta alla grandezza dei suoi contenuti
             children: [
               const Icon(Icons.lock, size: 100, color: Colors.white),
               const SizedBox(height: 20),
