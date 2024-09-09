@@ -123,37 +123,64 @@ class _HomePageState extends ConsumerState<HomePage> {
                   itemCount: books.length,
                   itemBuilder: (context, index) {
                     final book = books[index];
-                    return ListTile(
-                      leading: SizedBox(
-                        width: 50,
-                        height: 75,
-                        child: Image.network(
-                          book['book_image'] ?? '',
-                          fit: BoxFit.cover,
-                          errorBuilder: (BuildContext context, Object exception,
-                              StackTrace? stackTrace) {
-                            return Container(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(16),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SizedBox(
+                              width: 50,
+                              height: 75,
+                              child: Image.network(
+                                book['book_image'] ?? '',
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return Container(
+                                    color: Colors.grey,
+                                    child: const Icon(Icons.broken_image),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            book['title'],
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            book['author'],
+                            style: const TextStyle(
+                              fontSize: 16,
                               color: Colors.grey,
-                              child: const Icon(Icons.broken_image),
+                            ),
+                          ),
+                          onTap: () {
+                            // Naviga alla pagina dei dettagli del libro
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookDetailsPage(
+                                  title: book['title'],
+                                  author: book['author'],
+                                  coverUrl: book['book_image'] ?? '',
+                                  description: book['description'] ?? '',
+                                ),
+                              ),
                             );
                           },
                         ),
                       ),
-                      title: Text(book['title']),
-                      onTap: () {
-                        // Naviga alla pagina dei dettagli del libro
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BookDetailsPage(
-                              title: book['title'],
-                              author: book['author'],
-                              coverUrl: book['book_image'] ?? '',
-                              description: book['description'] ?? '',
-                            ),
-                          ),
-                        );
-                      },
                     );
                   },
                 );
