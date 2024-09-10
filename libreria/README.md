@@ -47,6 +47,6 @@ L'ultima pagina permette di controllare le informazioni dell'utente con l'aggiun
 All'interno dell'applicazione sono stati utilizzati diversi pacchetti, fruti attraverso "pub.dev", per garantire una corretta esecuzione dell'applicativo, rimanendo il linea con la specifica. Segue una lista con breve descrizione dei pacchetti utilizzati.
 
 1. **flutter_riverpod:** pacchetto utilizzato per gestire e propagare lo stato, ovvero l'utenza dove al suo interno è presente la lista di libri salvati nei preferiti;
-2. **path_provider:** pacchetto utilizzato per accedere alla path locale dove è installata l'applicazione. Fondamentale in quanto lo stato è salvato localmente nel dispositivo per poter poi essere ricaricato all'apertura dell'applicazione;
+2. **path_provider:** pacchetto utilizzato per accedere alla path locale dove è installata l'applicazione. Fondamentale in quanto lo stato è salvato localmente nel dispositivo per poter poi essere ricaricato all'apertura dell'applicazione. L'utente viene serializzato, ovvero convertito in formato JSON, per poi essere salvato localmente;
 3. **flutter_launcher_icons:** pacchetto impiegato per cambiare l'icona dell'applicazione;
-4. **http:** pacchetto per poter effettuare e gestire richieste di tipo HTTP.
+4. **http:** pacchetto per poter effettuare e gestire richieste di tipo HTTP. Nel dettaglio, nella pagina HomePage è stato utilizzato l'endpoint del New York Times, mentre nella ricerca quello di OpenLibray. La scelta di utilizzare due API di servizi diversi è dovuta che nessuno dei due servizi era propriamente completo.
