@@ -41,15 +41,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Search',
+            label: 'Ricerca',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            label: 'Favorites',
+            label: 'Preferiti',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'User',
+            label: 'Utente',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -90,7 +90,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         );
                       },
                       child: Container(
-                        width: 160,
+                        // width: 160,
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: AspectRatio(
                           aspectRatio: 2 / 3,
