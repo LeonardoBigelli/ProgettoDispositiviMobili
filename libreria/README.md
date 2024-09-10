@@ -2,7 +2,7 @@
 ### Matricola: 329188
 # libreria
 
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="img/logo.png" alt="Logo" width="100">
 </div>
 Progetto sviluppato in Flutter che permette la gestione di una libreria personale.
