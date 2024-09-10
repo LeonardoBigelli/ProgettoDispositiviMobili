@@ -17,28 +17,28 @@ L'applicazione gestisce un utente, precedentemente creato, a cui sono chieste le
 
 ## Esperienza utente 
 La prima pagina visualizzata permette l'inserimento delle credenziali d'accesso:
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="img/login.jpg" alt="Login" width="150">
 </div>
 
 Una volta effettuato l'accesso, viene visualizzata la home page. Essa permetterà di conoscere ed esplorare i libri più venduti e quelli più in voga in quel momento:
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="img/home.jpg" alt="Home" width="150">
 </div>
 
 Per la ricerca dei libri, in alto è presente un campo in cui è possibile cercare un nuovo libro, dato il suo titolo. Nell'esempio sotto riportato segue la ricerca "The lord of rings".
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="img/search.jpg" alt="Cerca" width="150">
 </div>
 
 La terza pagina permette la visualizzazione e l'eleventuale rimozione dei libri salvati nei preferiti. L'azione di eliminare un preferito viene svolta trascinando il libro in questione verso sinistra.
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="img/favorite.jpg" alt="Preferiti" width="150">
   <img src="img/remove.jpg" alt="Rimozione" width="150">
 </div>
 
 L'ultima pagina permette di controllare le informazioni dell'utente con l'aggiunta di un contatore dei libri attualmente salvati nei preferiti:
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="img/user.jpg" alt="User" width="150">
 </div>
 
