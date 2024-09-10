@@ -18,7 +18,7 @@ L'applicazione gestisce un utente, precedentemente creato, a cui sono chieste le
 ## Esperienza utente 
 La prima pagina visualizzata permette l'inserimento delle credenziali d'accesso:
 <div style="display: flex; justify-content: center;">
-  <img src="img/login.png" alt="Login" width="150">
+  <img src="img/login.jpg" alt="Login" width="150">
 </div>
 
 ## Tecnologia
