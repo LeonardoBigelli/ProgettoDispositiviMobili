@@ -3,7 +3,7 @@
 # libreria
 
 Progetto sviluppato in Flutter che permette la gestione di una libreria personale.
-<div style="text-align: center;">
+<div style="display: flex; justify-content: center;">
   <img src="img/logo.png" alt="Descrizione" width="300">
 </div>
 
