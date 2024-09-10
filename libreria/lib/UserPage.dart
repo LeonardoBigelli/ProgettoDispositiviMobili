@@ -1,7 +1,9 @@
+//import impiegati
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/UserCredentials.dart';
 
+//classe per visualizzare la pagina per i dettagli dell'utente
 class UserPage extends ConsumerStatefulWidget {
   @override
   _UserPageState createState() => _UserPageState();

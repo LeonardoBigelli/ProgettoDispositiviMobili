@@ -1,8 +1,10 @@
+//import impiegati
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/UserCredentials.dart';
 import 'bookItem.dart';
 
+//classe che permette la visualizzazione della pagine dei preferiti.
 class FavoritesPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,6 +51,7 @@ class FavoritesPage extends ConsumerWidget {
               itemCount: favoriteBooks.length,
               itemBuilder: (context, index) {
                 final book = favoriteBooks[index];
+                //widget personalizzato
                 return BookItem(
                   title: book[0],
                   author: book[1],

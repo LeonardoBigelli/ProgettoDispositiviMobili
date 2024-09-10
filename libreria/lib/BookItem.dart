@@ -1,5 +1,7 @@
+//import impiegati
 import 'package:flutter/material.dart';
 
+//widget personalizzato senza stato, utilizzato nella pagina dei preferiti
 class BookItem extends StatelessWidget {
   final String title;
   final String author;
@@ -17,6 +19,7 @@ class BookItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      //per effettuare lo swipe
       child: Dismissible(
         key: Key(title),
         direction: DismissDirection.endToStart,

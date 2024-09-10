@@ -1,3 +1,4 @@
+//import delle classi impiegate
 import 'package:flutter/material.dart';
 import 'package:libreria/LoginPage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //pagina principale che viene invocata appena viene aperta l'applicazione
+      //pagina di login che viene invocata appena viene aperta l'applicazione
       home: LoginPage(),
     );
   }

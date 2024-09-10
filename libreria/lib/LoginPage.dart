@@ -1,12 +1,17 @@
+//import delle classi impiegate
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/HomeScreen.dart';
 import 'package:libreria/UserCredentials.dart';
 
+//classe che permette di effettuare il login all'applicazione.
+//Quando viene effettuato il login, carica lo stato, se presente, salvato in locale
 class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    //username
     final usernameController = TextEditingController();
+    //password
     final passwordController = TextEditingController();
 
     void login() {
@@ -42,6 +47,7 @@ class LoginPage extends ConsumerWidget {
               const Icon(Icons.lock, size: 100, color: Colors.white),
               const SizedBox(height: 20),
               TextField(
+                //campo di testo per l'inserimento del nome utente
                 controller: usernameController,
                 decoration: InputDecoration(
                   labelText: 'Nome utente',
@@ -57,6 +63,7 @@ class LoginPage extends ConsumerWidget {
               ),
               const SizedBox(height: 20),
               TextField(
+                //campo di testo per l'inserimento della password
                 controller: passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -68,10 +75,11 @@ class LoginPage extends ConsumerWidget {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                obscureText: true, // Nasconde il testo della password
+                obscureText: true, // offuscamento della password digitata
                 style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 20),
+              //bottono per invocare il login effettivo
               ElevatedButton(
                 onPressed: login,
                 style: ElevatedButton.styleFrom(

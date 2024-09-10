@@ -1,3 +1,4 @@
+//import delle classi impiegate
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/FavoritesPage.dart';
@@ -11,8 +12,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  //indice selezionato che si riferisce alla classe da dover invocare
   int _selectedIndex = 0;
 
+  //lista contenente le classi rappresentanti le varie pagine
   final List<Widget> _pages = [
     HomePage(),
     SearchPage(),

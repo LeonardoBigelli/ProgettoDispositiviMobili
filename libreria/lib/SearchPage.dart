@@ -1,3 +1,4 @@
+//import impiegati
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/BookDetailsPage.dart';
@@ -9,9 +10,11 @@ class SearchPage extends ConsumerStatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
+//classe che permette la visualizzazione di una pagina per la ricerca di un libro, dato il titolo
 class _SearchPageState extends ConsumerState<SearchPage> {
   final _searchController = TextEditingController();
   List _books = [];
+  //stato interno, per mostrare il simbolo del caricamento
   bool _isLoading = false;
 
   void _searchBooks() async {
@@ -55,6 +58,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
               hintText: 'Cerca un libro',
               border: OutlineInputBorder(),
             ),
+            //quando si avvia la ricerca viene effettuata una richiesta all'endpoint
             onSubmitted: (_) => _searchBooks(),
           ),
           const SizedBox(height: 16),
@@ -68,6 +72,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             )
           else ...[
             for (var book in _books)
+              //ogni libro (elemento della risposta) è una Card
               Card(
                 elevation: 4, // Ombra della Card
                 margin: const EdgeInsets.symmetric(

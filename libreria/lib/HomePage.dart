@@ -1,3 +1,4 @@
+//import impiegati
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,16 +10,17 @@ final bestSellerProvider = FutureProvider<List<dynamic>>((ref) async {
   final response = await http.get(Uri.parse(
       'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=AguAOknUFxVqy4VNKquO7Z2q45pnMlko'));
 
+  //attende la risposta e, in caso di errore, solleva l'eccezione
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     return data['results']['books'];
   } else {
-    throw Exception('Failed to load bestsellers');
+    throw Exception('Errore nel caricamento dei BestSellers.');
   }
 });
 
-// Definisce il provider per i libri più venduti
-final mostSoldBooksProvider = FutureProvider<List<dynamic>>((ref) async {
+// Definisce il provider per i libri più in voga del momento
+final booksHot = FutureProvider<List<dynamic>>((ref) async {
   final response = await http.get(Uri.parse(
       'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=AguAOknUFxVqy4VNKquO7Z2q45pnMlko'));
 
@@ -26,7 +28,7 @@ final mostSoldBooksProvider = FutureProvider<List<dynamic>>((ref) async {
     final data = json.decode(response.body);
     return data['results']['books'];
   } else {
-    throw Exception('Failed to load most sold books');
+    throw Exception('Errore nel caricamento dei libri del momento.');
   }
 });
 
@@ -40,7 +42,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final bestSellersAsyncValue = ref.watch(bestSellerProvider);
-    final mostSoldBooksAsyncValue = ref.watch(mostSoldBooksProvider);
+    final booksHotValue = ref.watch(booksHot);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,6 +68,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 0.3, // Altezza fissa per la lista orizzontale
             child: bestSellersAsyncValue.when(
               data: (books) {
+                //ListView dinamica
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: books.length,
@@ -73,7 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     final book = books[index];
                     return GestureDetector(
                       onTap: () {
-                        // Naviga alla pagina dei dettagli del libro
+                        // invoca la classe per i dettagli del libro
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -117,8 +120,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             height: MediaQuery.of(context).size.height -
                 (MediaQuery.of(context).size.height * 0.3) -
                 128, // Altezza dinamica
-            child: mostSoldBooksAsyncValue.when(
+            child: booksHotValue.when(
               data: (books) {
+                //ListView per i libri più in voga
                 return ListView.builder(
                   itemCount: books.length,
                   itemBuilder: (context, index) {
@@ -166,7 +170,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ),
                           onTap: () {
-                            // Naviga alla pagina dei dettagli del libro
+                            // invoca la classe per i dettagli del libro
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -185,6 +189,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   },
                 );
               },
+              // simbolo di caricamento per aspettare la risposta dell'endpoint
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stack) =>
                   Center(child: Text('Failed to load data: $error')),

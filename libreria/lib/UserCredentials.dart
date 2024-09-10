@@ -1,13 +1,15 @@
+//import impiegati
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
+//classe per astrarre il concetto di utenza
 class UserCredentials {
   final String username;
   final String password;
   List<List<String>>
-      favoriteBooks; //un elemento singolo e' [titolo, autore, img copertina]
+      favoriteBooks; //un elemento singolo e' [titolo, autore, img copertina, descrizione]
 
   UserCredentials({
     required this.username,
@@ -15,14 +17,17 @@ class UserCredentials {
     List<List<String>>? favoriteBooks,
   }) : favoriteBooks = favoriteBooks ?? [];
 
+  //metodo per validare l'unico utente del sistema
   bool validate() {
     return username == "admin" && password == "admin";
   }
 
+  //aggiunta di un libro nei preferiti
   void addFavoriteBook(String title, String author, String coverUrl) {
     favoriteBooks.add([title, author, coverUrl]);
   }
 
+  //rimozione di un libro nei preferiti
   void removeFavoriteBook(String title) {
     favoriteBooks.removeWhere((book) => book[0] == title);
   }
@@ -50,6 +55,7 @@ class UserCredentials {
   }
 }
 
+//provider che utilizza la classe sopra citata, all'interno dell'applicazione verrà instanziata sempre questa classe
 class UserProvider extends StateNotifier<UserCredentials?> {
   UserProvider() : super(null) {
     _loadUser(); // Carica l'utente all'inizializzazione
@@ -69,9 +75,9 @@ class UserProvider extends StateNotifier<UserCredentials?> {
         final file = await _getUserFile();
         final userJson = jsonEncode(state!.toJson());
         await file.writeAsString(userJson);
-        print('User data saved: $userJson'); // Debug
+        print('Dati utente salvati in: $userJson'); // Debug
       } catch (e) {
-        print('Failed to save user data: $e');
+        print('Errore nel salvataggio: $e');
       }
     }
   }
@@ -83,12 +89,12 @@ class UserProvider extends StateNotifier<UserCredentials?> {
       if (await file.exists()) {
         final userJson = await file.readAsString();
         state = UserCredentials.fromJson(jsonDecode(userJson));
-        print('User data loaded: $userJson'); // Debug
+        print('Dati utente caricati: $userJson'); // Debug
       } else {
-        print('User data file not found');
+        print('File non trovato');
       }
     } catch (e) {
-      print('Failed to load user data: $e');
+      print('Errore: $e');
     }
   }
 
@@ -107,19 +113,6 @@ class UserProvider extends StateNotifier<UserCredentials?> {
     if (state != null) {
       state!.removeFavoriteBook(title);
       _saveUser(); // Salva l'utente ogni volta che viene rimosso un libro
-    }
-  }
-
-  void logout() async {
-    state = null;
-    try {
-      final file = await _getUserFile();
-      if (await file.exists()) {
-        await file.delete();
-        print('User data file deleted');
-      }
-    } catch (e) {
-      print('Failed to delete user data file: $e');
     }
   }
 }

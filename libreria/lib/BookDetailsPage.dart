@@ -1,7 +1,9 @@
+//import impiegati
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libreria/UserCredentials.dart';
 
+//classe per la visualizzazione dei dattagli di un libro quando viene cliccato dall'home page
 class BookDetailsPage extends ConsumerWidget {
   final String title;
   final String author;
@@ -19,6 +21,7 @@ class BookDetailsPage extends ConsumerWidget {
   // Funzione per aggiungere il libro tra i preferiti
   void _addBookToFavorites(BuildContext context, WidgetRef ref) {
     final provider = ref.read(userProvider.notifier);
+    //invocazione del metodo del provider
     provider.addFavoriteBook(title, author, coverUrl);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Libro aggiunto ai preferiti')),
