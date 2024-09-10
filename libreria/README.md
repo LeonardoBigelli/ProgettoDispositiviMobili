@@ -4,7 +4,7 @@
 
 Progetto sviluppato in Flutter che permette la gestione di una libreria personale.
 <div style="display: flex; justify-content: center;">
-  <img src="img/logo.png" alt="Descrizione" width="300">
+  <img src="img/logo.png" alt="Logo" width="150">
 </div>
 
 ## Scopo dell'applicazione
@@ -16,7 +16,10 @@ L'applicazione permette di gestire una raccolta di libri personale. L'insieme di
 L'applicazione gestisce un utente, precedentemente creato, a cui sono chieste le credenziali d'accesso per permettere di usufruire dell'applicazione. Una volta effettuato l'accesso, la pagine visualizzata è la Home Page, in cui vengono mostrati i libri con il numero maggiore di copie vendute e anche i libri più in voga del momento. In basso è presente una barra di navigazione in cui è possibile scegliere la pagina in cui accedere. La seconda pagina ha disposizione permette di cercare un libro dato il titolo. Su ciascun libro è possibile visualizzare più dettegli e anche salvarlo nei preferiti, cliccandoci sopra. La lista dei libri salvati nei preferiti è visualizzata nella terza pagina, in cui è possibile rimuovere un libro, precedentemente salvato, effettuando uno "swipe" verso sinistra. L'ultima pagina mostra il profilo dell'utente, indicando username, password e il numero di libri preferiti.
 
 ## Esperienza utente 
-
+La prima pagina visualizzata permette l'inserimento delle credenziali d'accesso:
+<div style="display: flex; justify-content: center;">
+  <img src="img/login.png" alt="Login" width="150">
+</div>
 
 ## Tecnologia
 
