@@ -103,8 +103,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) =>
-                  Center(child: Text('Failed to load data: $error')),
+              error: (error, stack) => Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                    Icon(Icons.error, size: 40, color: Colors.grey),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Errore nel caricamento dei libri',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[600],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ])),
             ),
           ),
           const Padding(
@@ -120,79 +134,93 @@ class _HomePageState extends ConsumerState<HomePage> {
                 (MediaQuery.of(context).size.height * 0.3) -
                 128, // Altezza dinamica
             child: booksHotValue.when(
-              data: (books) {
-                //ListView per i libri più in voga
-                return ListView.builder(
-                  itemCount: books.length,
-                  itemBuilder: (context, index) {
-                    final book = books[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
-                      child: Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(16),
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: SizedBox(
-                              width: 50,
-                              height: 75,
-                              child: Image.network(
-                                book['book_image'] ?? '',
-                                fit: BoxFit.cover,
-                                errorBuilder: (BuildContext context,
-                                    Object exception, StackTrace? stackTrace) {
-                                  return Container(
-                                    color: Colors.grey,
-                                    child: const Icon(Icons.broken_image),
-                                  );
-                                },
-                              ),
-                            ),
+                data: (books) {
+                  //ListView per i libri più in voga
+                  return ListView.builder(
+                    itemCount: books.length,
+                    itemBuilder: (context, index) {
+                      final book = books[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          title: Text(
-                            book['title'],
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Text(
-                            book['author'],
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          onTap: () {
-                            // invoca la classe per i dettagli del libro
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookDetailsPage(
-                                  title: book['title'],
-                                  author: book['author'],
-                                  coverUrl: book['book_image'] ?? '',
-                                  description: book['description'] ?? '',
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(16),
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: SizedBox(
+                                width: 50,
+                                height: 75,
+                                child: Image.network(
+                                  book['book_image'] ?? '',
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Container(
+                                      color: Colors.grey,
+                                      child: const Icon(Icons.broken_image),
+                                    );
+                                  },
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                            title: Text(
+                              book['title'],
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              book['author'],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            onTap: () {
+                              // invoca la classe per i dettagli del libro
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BookDetailsPage(
+                                    title: book['title'],
+                                    author: book['author'],
+                                    coverUrl: book['book_image'] ?? '',
+                                    description: book['description'] ?? '',
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-              // simbolo di caricamento per aspettare la risposta dell'endpoint
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stack) =>
-                  Center(child: Text('Failed to load data: $error')),
-            ),
+                      );
+                    },
+                  );
+                },
+                // simbolo di caricamento per aspettare la risposta dell'endpoint
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Icon(Icons.error, size: 40, color: Colors.grey),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Errore nel caricamento dei libri',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ]))),
           ),
         ],
       ),
